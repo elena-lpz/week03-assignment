@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+    <script src="app.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Slay the Vampire</title>
+  </head>
+  <body>
+    <audio loop autoplay src="assets/music/halloween-303749.mp3"></audio>
+    <header class="navbar">
+      <img
+        class="logo"
+        src="assets/images/game-logo.svg"
+        alt="Slaye the Vampire game logo"
+      />
+      <nav>
+        <div class="sound-bar">
+          <button id="play" class="audio-controls">
+            <i class="fa-solid fa-play"></i>
+          </button>
+          <button id="pause" class="audio-controls">
+            <i class="fa-solid fa-pause"></i>
+          </button>
+        </div>
+        <button id="restart-button">RESTART</button>
+      </nav>
+    </header>
+    <section class="vampire-container">
+      <!-- <img
+        id="vampire-char"
+        class="vampire pixel-art"
+        src="/assets/images/vampire-mobile.png"
+        alt="vampire character in pixel style"
+      /> -->
+      <div class="vampire-character">
+        <img
+          id="vampire-char"
+          class="vampire-sprite pixel-art"
+          src="assets/images/vampire/vampires_idle.png"
+          alt="Vampire character idle"
+        />
+      </div>
+    </section>
+    <section class="stats">
+      <div class="count">
+        <div class="counters">
+          <div class="xp">
+            <p>MANA:</p>
+            <p id="damage-count">0</p>
+          </div>
+          <div class="dps">
+            <p>DPS:</p>
+            <p id="dps-count">0</p>
+          </div>
+        </div>
+      </div>
+      <!-- <button id="restart-button" class="mb">RESTART</button>
+      </div> -->
+    </section>
+    <section class="spellbook">
+      <h2 class="banner-2">SPELLBOOK</h2>
+      <div id="spells-container"></div>
+    </section>
+  </body>
+</html>
