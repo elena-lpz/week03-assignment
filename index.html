@@ -18,67 +18,37 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     />
-    <script src="app.js" defer></script>
-    <link rel="stylesheet" href="style.css" />
-    <title>Slay the Vampire</title>
+    <link rel="stylesheet" href="style-main.css" />
+    <title>Welcome to Slay the Vampire</title>
   </head>
   <body>
-    <audio loop autoplay src="assets/audio/halloween-303749.mp3"></audio>
-    <header class="navbar">
+    <header>
       <img
         class="logo"
-        src="assets/images/game-logo.svg"
-        alt="Slaye the Vampire game logo"
+        src="assets/images/logo/game-logo.svg"
+        alt="Slay the Vampire logo"
       />
-      <nav>
-        <div class="sound-bar">
-          <button id="play" class="audio-controls">
-            <i class="fa-solid fa-play"></i>
-          </button>
-          <button id="pause" class="audio-controls">
-            <i class="fa-solid fa-pause"></i>
-          </button>
-        </div>
-        <button id="restart-button">RESTART</button>
-      </nav>
     </header>
-    <section class="vampire-container">
-      <!-- <img
-        id="vampire-char"
-        class="vampire pixel-art"
-        src="/assets/images/vampire-mobile.png"
-        alt="vampire character in pixel style"
-      /> -->
-      <div id="vampire-character" class="vampire-character">
-        <!-- <img
-          id="vampire-char"
-          class="vampire-sprite pixel-art"
-          src="assets/images/vampire/vampires_idle.png"
-          alt="Vampire character idle"
-        /> -->
-      </div>
-    </section>
-    <section class="stats">
-      <div class="count">
-        <div class="xp">
-          <p>MANA:</p>
-          <p id="damage-count">0</p>
-        </div>
-        <div class="dps">
-          <p>DPS:</p>
-          <p id="dps-count">0</p>
-        </div>
-      </div>
-      <!-- <button id="restart-button" class="mb">RESTART</button>
-      </div> -->
-    </section>
-    <section class="spellbook">
-      <div class="banner-2">
-        <img src="assets/images/spellbook.png" alt="icon of a scroll" />
-        <h2>SPELLBOOK</h2>
-        <img src="assets/images/spellbook.png" alt="icon of a scroll" />
-      </div>
-      <div id="spells-container"></div>
+    <section class="main-container">
+      <h1>A Cold Wind Blows...</h1>
+      <p>
+        Deep in the tangled heart of the Blackpine Forest, you tread cautiously
+        beneath a moonlit sky. The trees whisper secrets older than time, and
+        the air grows colder with every step. Your hand rests on the hilt of
+        your blade, senses sharp. Suddenly, the shadows ahead stir... From the
+        darkness emerges a figure; tall, pale, and cloaked in crimson. His eyes
+        glow with unnatural hunger. You've heard tales of him whispered in
+        trembling voices around tavern fires: The Vampire of Blackpine.
+        <br />This is no myth. <br />This is your <strong>fight</strong>.
+      </p>
+      <nav class="links">
+        <a href="/game.html">Begin encounter</a>
+        <a
+          href="https://github.com/elena-lpz/week03-assignment/blob/main/README.md"
+          >Credits</a
+        >
+        <a href="https://github.com/elena-lpz/">Github</a>
+      </nav>
     </section>
   </body>
 </html>

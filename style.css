@@ -16,7 +16,7 @@ html {
 body {
   display: grid;
   grid-template-columns: 20px 1fr 1fr 1fr 20px;
-  grid-template-rows: 8px 15dvh 2fr 1fr 3fr 48px;
+  grid-template-rows: 20px 15dvh 2fr 1fr 3fr 32px;
   height: 100dvh;
   width: 100%;
   background-color: #26193c;
@@ -127,6 +127,7 @@ body {
   width: calc(38px * var(--pixel-size-two));
   height: calc(38px * var(--pixel-size-two));
   overflow: hidden;
+
   /* background-color: white; */
 }
 
@@ -149,7 +150,7 @@ body {
   animation: moveSpritesheet 1s steps(4) infinite;
   width: calc(200px * var(--pixel-size-one));
   /* height: calc(64px * var(--pixel-size)); */
-  cursor: url("assets/images/cursor/icon_32_2_10 2.png"), default;
+  cursor: url("assets/images/cursor/sword-cursor.png"), default;
 }
 
 @media (width >= 1400px) {
@@ -343,6 +344,7 @@ body {
   grid-column: 2/5;
   grid-row: 4/6;
   overflow: scroll;
+  overflow-x: hidden;
   /* padding: 12px 24px; */
 }
 

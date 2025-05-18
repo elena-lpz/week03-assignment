@@ -1,0 +1,97 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Pixelify Sans", sans-serif;
+}
+
+body {
+  background-image: url("assets/images/backgrounds/background-forest -2.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  height: 100dvh;
+}
+
+.main-container {
+  background: rgba(36, 25, 60, 0.6);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+  width: 100%;
+  max-width: 700px;
+  /* text-align: center; */
+  padding: 1rem;
+  color: white;
+}
+
+h1 {
+  padding-bottom: 1rem;
+}
+
+p {
+  padding-bottom: 1rem;
+  line-height: 1.7;
+  font-size: 16px;
+  max-height: 30dvh;
+  overflow: scroll;
+  overflow-x: hidden;
+  /* width: 80dvw; */
+}
+
+.logo {
+  width: 70vw;
+  z-index: 1000;
+  max-width: 300px;
+  height: auto;
+  margin-bottom: 2rem;
+  /* padding-bottom: 2rem; */
+}
+
+.links {
+  margin-top: 2rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+a {
+  padding-bottom: 1rem;
+  color: #f24472;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 600;
+}
+a:last-child {
+  padding-bottom: 0;
+}
+
+a:hover {
+  color: #70468c;
+}
+
+@media (width >= 992px) {
+  .main-container {
+    padding: 2rem;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 20px;
+  }
+
+  .logo {
+    width: 20dvw;
+  }
+}
