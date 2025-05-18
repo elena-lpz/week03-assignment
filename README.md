@@ -7,6 +7,10 @@ For this week's assignment we needed to build a cookie clicker game based on the
 - https://orteil.dashnet.org/experiments/cookie/
 - https://www.decisionproblem.com/paperclips/index2.html
 
+# Live demo
+
+- https://elena-lpz.github.io/week03-assignment/
+
 ## Requirements
 
 🎯 Fetch upgrade data from the provided API and at least one upgrade from the API update the cookie count.
@@ -55,7 +59,9 @@ The biggest challenge was managing the large function that controls most of the 
 
 - I added a start screen, but not in the way I originally envisioned. I considered a more polished approach, but decided not to modify the main JavaScript too much, especially since I didn’t want the game to run in the background (in case there was any DPS happening) while the start screen was still visible.
 
-I'm aware that the styling for this project ended up a bit messy. With so many changes happening during development, it became difficult to maintain a clean and organized CSS file. For example, I initially used a static image for the vampire embedded directly in the HTML, but later transitioned to dynamically generating and animating two separate vampire states using JavaScript. I did my best to tidy things up afterward, but I know there's room for improvement in keeping the styles more structured and consistent.
+- I'm aware that the styling for this project ended up a bit messy. With so many changes happening during development, it became difficult to maintain a clean and organized CSS file. For example, I initially used a static image for the vampire embedded directly in the HTML, but later transitioned to dynamically generating and animating two separate vampire states using JavaScript. I did my best to tidy things up afterward, but I know there's room for improvement in keeping the styles more structured and consistent.
+
+- I would like to get some tips on how to organise my .js file better. Should arrays and variables go at the top, etc
 
 # Resources
 
