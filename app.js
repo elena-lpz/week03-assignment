@@ -34,6 +34,7 @@ let dps = JSON.parse(dpsData) || 0;
 //fetch the upgrades from the API
 //API url: https://cookie-upgrade-api.vercel.app/api/upgrades
 
+//TODO fetch data
 async function getSpells() {
   const response = await fetch(
     "https://cookie-upgrade-api.vercel.app/api/upgrades"
@@ -45,7 +46,6 @@ async function getSpells() {
 
 // getSpells(); //we were calling this twice
 
-//TODO
 //To create multiple elements in a more convenient way, loops are your friend.
 // create DOM elements to contain the upgrades data
 // create an element
@@ -53,9 +53,7 @@ async function getSpells() {
 // append it to the DOM
 // after you complete this task, you should see the upgrades on your website
 
-// How do I update the name of the upgrades -- spells
-
-//create a list with the spells names used to rename the upgrades
+// TODO ARRAYS
 
 const spellIcons = [
   {
@@ -122,26 +120,6 @@ const vampireStates = [
 
 // I was not sure how to replace upgrade names after this // got help with it on Friday
 
-// const spellsContainer = document.getElementById("spells-container");
-
-// const spells = getSpells();
-
-// function createIconImages(icon) {
-//   const spellIcon = document.createElement("img");
-//   spellIcon.setAttribute("src", icon.src);
-//   spellIcon.setAttribute("alt", icon.alt);
-//   spellIcon.setAttribute("class", icon.class);
-//   spellsContainer.appendChild(icon);
-// }
-
-// spells.forEach((icon) => {
-//   createIconImages();
-
-//   // name = spellNames
-
-//   spellsContainer.appendChild(icon);
-// });
-
 const spellsContainer = document.getElementById("spells-container");
 const spellEffect = new Audio("assets/audio/sound-effects/spell-cast.mp3");
 const errorSound = new Audio("assets/audio/sound-effects/error-sound.mp3");
@@ -153,6 +131,7 @@ const errorSound = new Audio("assets/audio/sound-effects/error-sound.mp3");
 // async const spells = getSpells();
 // console.log(spells);
 
+// TODO - generate spells with images, info from the API and buttons. Make buttons work. Change character animations. Sound effects and modals.
 //The next function makes my eyes water when I see it, doesn't fit my screen, could have never done it without help even though once it was all layed out I was able to add a ton of extra stuff to it and it all actually makes sense, but the thought of doing something like this again is daunting.
 
 async function spellsData() {
@@ -237,12 +216,14 @@ async function spellsData() {
         }, 3000);
       } else {
         alertMessage.textContent = "Not enough mana to cast this spell.";
-        errorSound.play(); //this audio is unfortunately very quiet but could not find anything
+        errorSound.play(); //this audio is unfortunately very quiet but could not find anything better
         setTimeout(() => {
           alertMessageContainer.remove();
         }, 3000);
 
-        //first attempt, was a bit annoying to have to click ok to stop it
+        //FIRST ATTEMPT
+        //
+        // It was a bit annoying to have to click OK to got back to the game, so decided to add a modal instead
 
         // alert(
         //   `You cast ${spellNames[index].spell}! DPS increased by ${increase}.`
@@ -251,7 +232,6 @@ async function spellsData() {
         // } else {
         //   alert("Not enough mana to cast this spell.");
         // }
-        //would like to try and style this for next time, wondering if there's an easy way of styling alerts? (done :D)
       }
     });
   });
@@ -259,19 +239,17 @@ async function spellsData() {
 
 spellsData();
 
-//How can I update the name of the spells only when there's a container with images and buttons already in my html
-
+//====================================================
+// TODO The interval
+// Notes to myself
 // increase in the API updates dps
 // cost in the API is dependable of damageCount
-
-//====================================================
-//the interval
 
 // We need to retrieve the previous saved damage from the local storage and parse it
 const damageNumber = document.getElementById("damage-count");
 const dpsNumber = document.getElementById("dps-count");
 
-// First attempt
+// FIRST ATTEMPT
 // stats.dps = JSON.parse(localStorage.getItem("dps"));
 // dpsNumber.textContent = stats.dps;
 // console.log(dpsNumber.textContent);
@@ -279,9 +257,9 @@ const dpsNumber = document.getElementById("dps-count");
 // stats.damageCount = JSON.parse(localStorage.getItem("damageCount"));
 // damageNumber.textContent = stats.damageCount;
 
-// This was fine, until I decided to access it on my desktop computer, this made the DPS number empty and it would log on the console as an empty space. I tried again on incognito mode and the same happened
+// This was fine, until I decided to access it on my desktop computer, this made the DPS number empty and it would log on the console as an empty space. I tried again on incognito mode and the same happened. Realised I was getting a null value.
 
-// using what I learned above, I set a fallback value --> if value is null then show 0
+// Using what I learned above, I set a fallback value --> if value is null then show 0
 //https://chipcullen.com/javascript-fallback-values-booleans/
 
 stats.dps = JSON.parse(localStorage.getItem("dps")) || 0;
@@ -311,13 +289,14 @@ const swordEffect = new Audio("assets/audio/sound-effects/sword-sound.mp3");
 const vampireCharacterContainer = document.getElementById("vampire-character");
 
 // Originally created my character in HTML, but decided to dynamically generate it so that I could also easily change its state when clicked
-// This creates the vampire in its normal idle state
+
+// TODO - This creates the vampire in its normal idle state
 function createVampireIdle() {
   const vampireCharacterIdle = document.createElement("img");
   vampireCharacterIdle.ondragstart = () => false;
   //Avoid dragging of character - After some testing realised clicking on the image could sometimes cause it to drag, which would show the sprite with all the different versions of the character
 
-  //had to move this inside the createVampire functions so that it works AFTER creating th images
+  //had to move this inside the createVampire functions so that it works AFTER creating the images
 
   vampireCharacterIdle.setAttribute("src", vampireStates[0].src);
   vampireCharacterIdle.setAttribute("alt", vampireStates[0].alt);
@@ -328,7 +307,7 @@ function createVampireIdle() {
 }
 createVampireIdle();
 
-// This will create the vampire when its receiving damage
+// TODO - This will create the vampire when its receiving damage
 
 function createVampireHurt() {
   const vampireCharacterHurt = document.createElement("img");
@@ -344,14 +323,16 @@ function createVampireHurt() {
 
 createVampireHurt();
 
-//we could potentially create more states ie when vampire receives magic damage
+//we could potentially create more states ie when vampire receives magic damage. I will leave this for another time.
 
-// was having a little problem with the following event listener --> if you spam the click, the animation freezes, so looked up how to set up some form of a cooldown https://stackoverflow.com/questions/77667024/how-can-i-code-a-cooldown-to-a-key-press
-//we are going to set a cooldown for when the vampire is hurt, so we avoid the event triggering several times and freezing my animation
+// I am having a little problem with the following event listener --> if you spam the click, the animation freezes, so looked up how to set up some form of a cooldown https://stackoverflow.com/questions/77667024/how-can-i-code-a-cooldown-to-a-key-press
+//Tried to set a cooldown for when the vampire is hurt, so we avoid the event triggering several times and freezing my animation
 
 // let vampireIsHurt = false; // create a variable for when the vampire is hurt and we set it to false
 
-// ok so I tried this but didn't get far with it... I would need to only run the event if wampireIsHurt is false? That will stop the animation from triggering several times and freezing, and stop it from running if it's set to true... I don't quite know how to do this. Also I feel like this would stop the whole event alltogether, I want only the animation to not trigger, but the count to still go up. Elena from the future might like to pick this up.
+// I didn't get far with it... I would need to only run the event if wampireIsHurt is false? That will stop the animation from triggering several times and freezing, and stop it from running if it's set to true... I don't quite know how to do this. Also I feel like this would stop the whole event alltogether, I want only the animation to not trigger, but the count to still go up. Elena from the future might like to pick this up.
+
+//TODO Event listener when clicking the vampire - mana goes up
 
 vampireCharacterContainer.addEventListener("click", function () {
   stats.damageCount += 1; // on click, we add 1 to the damage count and update the value of it with the new number
@@ -359,7 +340,7 @@ vampireCharacterContainer.addEventListener("click", function () {
 
   swordEffect.play();
 
-  //this is probably not the best way of doing this but after trying a few things this is what I did. Both states of the character are generated on load and we just add or remove the class hidden when we want to show one or the other.... will look into how to better implement this when I have time
+  //this is probably not the best way of doing this but after trying a few things this is what I did. Both states of the character are generated on load and we just add or remove the class hidden when we want to show one or the other....
   const vampireIdle = document.getElementById("vampire-idle");
   const vampireHurt = document.getElementById("vampire-hurt");
 
@@ -381,7 +362,7 @@ vampireCharacterContainer.addEventListener("click", function () {
 
   //Tried to do this with a conditional, but this was causing the states to switch between them on click (OBVIOUSLY) which is not what we want as I want them to switch back to the idle state after say 1 second. We can use timeout for this instead
 
-  // following the logic from above, we add the classlist hidden from the idle character and remove it from the hurt character for  seconds
+  // following the logic from above, we add the classlist hidden from the idle character and remove it from the hurt character for 1 second
   vampireIdle.classList.add("hidden");
   vampireHurt.classList.remove("hidden");
 
@@ -395,7 +376,7 @@ vampireCharacterContainer.addEventListener("click", function () {
   damageNumber.textContent = stats.damageCount; //we also update the number on the screen
 });
 
-//TODO when the user clicks on the buy button in an upgrade in teh shop, the cookieCount value goes down, and the cps value goes up
+//TODO when the user clicks on the buy button in an upgrade in the shop, the cookieCount value goes down, and the cps value goes up
 
 //This is all part of the crazy async function spellsData() above now. Was originally going to have it as a separate function, but thought it best to be part of the loop. I started with some comments here to get the logic right, so leaving it all here for context.
 
@@ -425,7 +406,7 @@ vampireCharacterContainer.addEventListener("click", function () {
 //to create the logic of the shop, you could have a function per upgrade OR you could have a reusable function that works for ALL upgrades
 //since we are using local storage, make sure that the local storage values are updated after the user buys an upgrade OR when the user clicks on the cookie
 
-// Reset button
+// TODO Reset button
 const restartButton = document.getElementById("restart-button");
 
 restartButton.addEventListener("click", function () {
@@ -440,7 +421,7 @@ restartButton.addEventListener("click", function () {
   //updates local storage
 });
 
-// Audio controls // I have to admit I just copied this from my assignment for week 1
+// TODO Audio controls // I have to admit I just copied this from my assignment for week 1...
 
 const audioPlay = document.querySelector("audio");
 const playMusic = document.getElementById("play");
