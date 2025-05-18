@@ -1,17 +1,13 @@
 console.log("hello world");
 
-//default starting values for cookie count and cps (either or)
-// let damageCount = 10;
-// let dps = 5;
-
-// TODO TRY: Start screen found this: https://www.reddit.com/r/programming/comments/10h4307/can_anyone_help_me_to_make_a_start_screen_in_this/
+//default starting values for cookie count and cps // damagecount/mana and dps in my case
 
 const stats = {
-  damageCount: 1,
+  damageCount: 0,
   dps: 0,
 };
 
-//if there is data in local storage, update stats with this data, so the user picks it up where they left off
+//TODO if there is data in local storage, update stats with this data, so the user picks it up where they left off
 
 // const stringifiedDamageCount = JSON.stringify(stats.damageCount);
 // localStorage.setItem("damageCount", stringifiedDamageCount);
@@ -25,11 +21,12 @@ const dpsData = localStorage.getItem("dps");
 // if (damageCountData = null) {
 //   stats.damageCount = JSON.parse(damageCountData);
 // }
-let damageCount = JSON.parse(damageCountData) || 0; // David helped :)
 
 // if (dpsData = null) {
 //   stats.dps = JSON.parse(dpsData);
 // }
+
+let damageCount = JSON.parse(damageCountData) || 0; // David helped :)
 let dps = JSON.parse(dpsData) || 0;
 
 //=======================================================
@@ -46,8 +43,9 @@ async function getSpells() {
   return data;
 }
 
-// getSpells();
+// getSpells(); //we were calling this twice
 
+//TODO
 //To create multiple elements in a more convenient way, loops are your friend.
 // create DOM elements to contain the upgrades data
 // create an element
@@ -122,7 +120,7 @@ const vampireStates = [
   },
 ];
 
-// Not sure how to replace upgrade names after this
+// I was not sure how to replace upgrade names after this // got help with it on Friday
 
 // const spellsContainer = document.getElementById("spells-container");
 
@@ -145,6 +143,8 @@ const vampireStates = [
 // });
 
 const spellsContainer = document.getElementById("spells-container");
+const spellEffect = new Audio("assets/audio/sound-effects/spell-cast.mp3");
+const errorSound = new Audio("assets/audio/sound-effects/error-sound.mp3");
 
 // async function createGetSpells() {
 //   const spells = await getSpells();
@@ -152,6 +152,8 @@ const spellsContainer = document.getElementById("spells-container");
 // }
 // async const spells = getSpells();
 // console.log(spells);
+
+//The next function makes my eyes water when I see it, doesn't fit my screen, could have never done it without help even though once it was all layed out I was able to add a ton of extra stuff to it and it all actually makes sense, but the thought of doing something like this again is daunting.
 
 async function spellsData() {
   const fetchedData = await getSpells();
@@ -162,7 +164,7 @@ async function spellsData() {
     const castButton = document.createElement("button");
     const increaseDamage = document.createElement("p");
     const skillCost = document.createElement("p"); // create elements for increase and cost
-    const spellDataContainer = document.createElement("div"); //needed a container for the spell data, so that Icould style it properly.
+    const spellDataContainer = document.createElement("div"); //needed a container for the spell data, so that I could style it properly.
 
     spellIcon.setAttribute("src", spellIcons[index].src);
     spellIcon.setAttribute("alt", spellIcons[index].alt);
@@ -193,6 +195,11 @@ async function spellsData() {
     castButton.addEventListener("click", function () {
       const cost = spell.cost;
       const increase = spell.increase;
+      const alertMessageContainer = document.createElement("section");
+      const alertMessage = document.createElement("h1");
+      alertMessage.classList.add("alert-message");
+      document.body.appendChild(alertMessageContainer);
+      alertMessageContainer.appendChild(alertMessage);
 
       if (stats.damageCount >= cost) {
         //is the damage count or mana is bigger or equal to the cost  ==> spell can be cast
@@ -207,13 +214,45 @@ async function spellsData() {
         localStorage.setItem("damageCount", JSON.stringify(stats.damageCount));
         localStorage.setItem("dps", JSON.stringify(stats.dps));
 
-        alert(
-          `You cast ${spellNames[index].spell}! DPS increased by ${increase}.`
-        );
+        // want the character to also change when casting spell // coppied what I did below for the character click event
+
+        const vampireIdle = document.getElementById("vampire-idle");
+        const vampireHurt = document.getElementById("vampire-hurt");
+
+        // following the logic from above, we add the classlist hidden from the idle character and remove it from the hurt character for  seconds
+        vampireIdle.classList.add("hidden");
+        vampireHurt.classList.remove("hidden");
+
+        // after 1 second it does the opposite
+        setTimeout(() => {
+          vampireIdle.classList.remove("hidden");
+          vampireHurt.classList.add("hidden");
+        }, 2000);
+
+        alertMessage.textContent = `You cast ${spellNames[index].spell}! DPS increased by ${increase}.`;
+        spellEffect.play();
+        //alert message on timeout
+        setTimeout(() => {
+          alertMessageContainer.remove();
+        }, 3000);
       } else {
-        alert("Not enough mana to cast this spell.");
+        alertMessage.textContent = "Not enough mana to cast this spell.";
+        errorSound.play(); //this audio is unfortunately very quiet but could not find anything
+        setTimeout(() => {
+          alertMessageContainer.remove();
+        }, 3000);
+
+        //first attempt, was a bit annoying to have to click ok to stop it
+
+        // alert(
+        //   `You cast ${spellNames[index].spell}! DPS increased by ${increase}.`
+        // );
+
+        // } else {
+        //   alert("Not enough mana to cast this spell.");
+        // }
+        //would like to try and style this for next time, wondering if there's an easy way of styling alerts? (done :D)
       }
-      //would like to try and style this for next time, wondering if there's an easy way of styling alerts?
     });
   });
 }
@@ -268,6 +307,7 @@ setInterval(function () {
 
 const vampireChar = document.getElementById("vampire-char"); //declared a var for the vampire image
 const swordEffect = new Audio("assets/audio/sound-effects/sword-sound.mp3");
+
 const vampireCharacterContainer = document.getElementById("vampire-character");
 
 // Originally created my character in HTML, but decided to dynamically generate it so that I could also easily change its state when clicked
@@ -275,7 +315,6 @@ const vampireCharacterContainer = document.getElementById("vampire-character");
 function createVampireIdle() {
   const vampireCharacterIdle = document.createElement("img");
   vampireCharacterIdle.ondragstart = () => false;
-
   //Avoid dragging of character - After some testing realised clicking on the image could sometimes cause it to drag, which would show the sprite with all the different versions of the character
 
   //had to move this inside the createVampire functions so that it works AFTER creating th images
@@ -289,7 +328,7 @@ function createVampireIdle() {
 }
 createVampireIdle();
 
-// This will create the vampire when its receiving damage adn we'll only call this function whehn the vampire is clicked
+// This will create the vampire when its receiving damage
 
 function createVampireHurt() {
   const vampireCharacterHurt = document.createElement("img");
@@ -304,6 +343,15 @@ function createVampireHurt() {
 }
 
 createVampireHurt();
+
+//we could potentially create more states ie when vampire receives magic damage
+
+// was having a little problem with the following event listener --> if you spam the click, the animation freezes, so looked up how to set up some form of a cooldown https://stackoverflow.com/questions/77667024/how-can-i-code-a-cooldown-to-a-key-press
+//we are going to set a cooldown for when the vampire is hurt, so we avoid the event triggering several times and freezing my animation
+
+// let vampireIsHurt = false; // create a variable for when the vampire is hurt and we set it to false
+
+// ok so I tried this but didn't get far with it... I would need to only run the event if wampireIsHurt is false? That will stop the animation from triggering several times and freezing, and stop it from running if it's set to true... I don't quite know how to do this. Also I feel like this would stop the whole event alltogether, I want only the animation to not trigger, but the count to still go up. Elena from the future might like to pick this up.
 
 vampireCharacterContainer.addEventListener("click", function () {
   stats.damageCount += 1; // on click, we add 1 to the damage count and update the value of it with the new number
@@ -347,7 +395,9 @@ vampireCharacterContainer.addEventListener("click", function () {
   damageNumber.textContent = stats.damageCount; //we also update the number on the screen
 });
 
-//when the user clicks on the buy button in an upgrade in teh shop, the cookieCount value goes down, and the cps value goes up
+//TODO when the user clicks on the buy button in an upgrade in teh shop, the cookieCount value goes down, and the cps value goes up
+
+//This is all part of the crazy async function spellsData() above now. Was originally going to have it as a separate function, but thought it best to be part of the loop. I started with some comments here to get the logic right, so leaving it all here for context.
 
 // const spellButton = document.getElementById("spell-button");
 
@@ -357,6 +407,7 @@ vampireCharacterContainer.addEventListener("click", function () {
 //   damageCount - +skillCost;
 // }
 
+//not really pseudocode but something along those lines:
 // need to be able to buy if the damamgeCount is high enough to purchase the upgrade or spell --> If damageCount >= spellcost
 
 // then we can spend those damage points --> damageCount -+ spellcost AND we need to also update the dps with the upgraded "dps += whatever the upgrade is"
@@ -369,10 +420,12 @@ vampireCharacterContainer.addEventListener("click", function () {
 
 // might want to add an alert or something: "you cast SpellName. Your damage per second grows stronger" or "you dont have enough damage points to cast this spell"
 
+//Manny's notes
 //you will need functions to contain the game logic.
 //to create the logic of the shop, you could have a function per upgrade OR you could have a reusable function that works for ALL upgrades
 //since we are using local storage, make sure that the local storage values are updated after the user buys an upgrade OR when the user clicks on the cookie
 
+// Reset button
 const restartButton = document.getElementById("restart-button");
 
 restartButton.addEventListener("click", function () {
@@ -387,7 +440,7 @@ restartButton.addEventListener("click", function () {
   //updates local storage
 });
 
-// Audio controls
+// Audio controls // I have to admit I just copied this from my assignment for week 1
 
 const audioPlay = document.querySelector("audio");
 const playMusic = document.getElementById("play");
