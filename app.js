@@ -106,6 +106,22 @@ const spellNames = [
   { spell: "Searing light" },
 ];
 
+const vampireStates = [
+  {
+    src: "assets/images/vampire/vampires_idle.png",
+    alt: "Vampire character in idle state",
+    className: "vampire-sprite pixel-art",
+    id: "vampire-idle",
+  },
+
+  {
+    src: "assets/images/vampire/vampire_hurt.png",
+    alt: "Vampire character receiving damage",
+    className: "vampire-sprite pixel-art hidden",
+    id: "vampire-hurt",
+  },
+];
+
 // Not sure how to replace upgrade names after this
 
 // const spellsContainer = document.getElementById("spells-container");
@@ -234,7 +250,6 @@ stats.damageCount = JSON.parse(localStorage.getItem("damageCount")) || 0;
 
 setInterval(function () {
   stats.damageCount += stats.dps;
-
   //cookieCount = cookieCount + cps
 
   //update the text content in the DOM with the new values
@@ -252,10 +267,83 @@ setInterval(function () {
 //when the user clicks on the vampire, the mana count or damage count value goes up by 1
 
 const vampireChar = document.getElementById("vampire-char"); //declared a var for the vampire image
+const swordEffect = new Audio("assets/audio/sound-effects/sword-sound.mp3");
+const vampireCharacterContainer = document.getElementById("vampire-character");
 
-vampireChar.addEventListener("click", function () {
+// Originally created my character in HTML, but decided to dynamically generate it so that I could also easily change its state when clicked
+// This creates the vampire in its normal idle state
+function createVampireIdle() {
+  const vampireCharacterIdle = document.createElement("img");
+  vampireCharacterIdle.ondragstart = () => false;
+
+  //Avoid dragging of character - After some testing realised clicking on the image could sometimes cause it to drag, which would show the sprite with all the different versions of the character
+
+  //had to move this inside the createVampire functions so that it works AFTER creating th images
+
+  vampireCharacterIdle.setAttribute("src", vampireStates[0].src);
+  vampireCharacterIdle.setAttribute("alt", vampireStates[0].alt);
+  vampireCharacterIdle.setAttribute("class", vampireStates[0].className);
+  vampireCharacterIdle.setAttribute("id", vampireStates[0].id);
+
+  vampireCharacterContainer.appendChild(vampireCharacterIdle);
+}
+createVampireIdle();
+
+// This will create the vampire when its receiving damage adn we'll only call this function whehn the vampire is clicked
+
+function createVampireHurt() {
+  const vampireCharacterHurt = document.createElement("img");
+  vampireCharacterHurt.ondragstart = () => false;
+
+  vampireCharacterHurt.setAttribute("src", vampireStates[1].src);
+  vampireCharacterHurt.setAttribute("alt", vampireStates[1].alt);
+  vampireCharacterHurt.setAttribute("class", vampireStates[1].className);
+  vampireCharacterHurt.setAttribute("id", vampireStates[1].id);
+
+  vampireCharacterContainer.appendChild(vampireCharacterHurt);
+}
+
+createVampireHurt();
+
+vampireCharacterContainer.addEventListener("click", function () {
   stats.damageCount += 1; // on click, we add 1 to the damage count and update the value of it with the new number
   console.log("vampire clicked"); // console check for clicks
+
+  swordEffect.play();
+
+  //this is probably not the best way of doing this but after trying a few things this is what I did. Both states of the character are generated on load and we just add or remove the class hidden when we want to show one or the other.... will look into how to better implement this when I have time
+  const vampireIdle = document.getElementById("vampire-idle");
+  const vampireHurt = document.getElementById("vampire-hurt");
+
+  // if (vampireIdle.classList.contains("hidden")) {
+  //   vampireIdle.classList.remove("hidden");
+  //   vampireHurt.classList.add("hidden");
+  // } else {
+  //   vampireIdle.classList.add("hidden");
+  //   vampireHurt.classList.remove("hidden");
+  // }
+
+  //  if (vampireIdle.classList.contains("hidden")) {
+  //   vampireIdle.classList.remove("hidden");
+  //   vampireHurt.classList.add("hidden");
+  // } else if (vampireHurt.classList.contains("hidden")) {
+  //   vampireIdle.classList.add("hidden");
+  //   vampireHurt.classList.remove("hidden");
+  // }
+
+  //Tried to do this with a conditional, but this was causing the states to switch between them on click (OBVIOUSLY) which is not what we want as I want them to switch back to the idle state after say 1 second. We can use timeout for this instead
+
+  // following the logic from above, we add the classlist hidden from the idle character and remove it from the hurt character for  seconds
+  vampireIdle.classList.add("hidden");
+  vampireHurt.classList.remove("hidden");
+
+  // after 1 second it does the opposite
+  setTimeout(() => {
+    vampireIdle.classList.remove("hidden");
+    vampireHurt.classList.add("hidden");
+  }, 1000);
+  // It doesn't work the best, but it's my best :D
+
   damageNumber.textContent = stats.damageCount; //we also update the number on the screen
 });
 
