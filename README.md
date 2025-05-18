@@ -47,6 +47,9 @@ The aim was to make it feel as much like a real game as possible, blending inter
 
 Before starting the development stage, I create wireframes and Figma screens that changed slightly as I was building the game, but were useful as a starting point.
 
+- Wireframes: https://github.com/elena-lpz/week03-assignment/blob/main/assets/images/design-assets/wireframe.png
+- Figma designs: Mobile - https://github.com/elena-lpz/week03-assignment/blob/main/assets/images/design-assets/mobile-version.png Desktop - https://github.com/elena-lpz/week03-assignment/blob/main/assets/images/design-assets/desktop-version.jpg
+
 ## Challenges
 
 This has been the most challenging assignment of the course so far, but also the most rewarding. I really enjoyed how much creative freedom it allowed. Once I started building, the ideas just kept flowing and it was hard to stop.
